@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    h1= title
+
+    form(method='POST', action='')
+        div.form-group
+            label(for='name') Genre:
+            input#name.form-control(type='text', placeholder='Fantasy, Horror, etc.', name='name', value=(undefined===genre ? '' : genre.name), required='true')
+        if update_flag
+            input(type='hidden', name='genre_id', value=genre._id)
+            button.btn.btn-primary(type='submit') Update Genre
+        else
+            button.btn.btn-primary(type='submit') Create Genre
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg
+                // != means whatever that follows it, is not escaped.

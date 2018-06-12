@@ -1,0 +1,25 @@
+extend layout
+
+block content
+    h1= title
+
+    form(method='POST', action='')
+        div.form-group
+            label(for='first_name') First Name:
+            input#first_name.form-control(type='text', required='true', name='first_name', value=(author===undefined ? '' : author.first_name))
+            label(for='family_name') Last Name:
+            input#family_name.form-control(type='text', required='true', name='family_name', value=(author===undefined ? '' : author.family_name))
+        div.form-group
+            label(for='date_of_birth') Date of birth:
+            input#date_of_birth.form-control(type='date', name='date_of_birth', placeholder='DD/MM/YYYY', value=(author===undefined? '' : author.date_of_birth_formatted))
+            label(for='date_of_death') Date of death:
+            input#date_of_death.form-control(type='date', name='date_of_death', placeholder='DD/MM/YYYY', value=(author===undefined? '' : author.date_of_death_formatted))
+        if update_flag
+            input(type='hidden', name='author_id', value=(author._id))
+            button.btn.button-primary(type='submit') Update Author
+        else
+            button.btn.button-primary(type='submit') Create Author
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

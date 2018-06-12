@@ -1,0 +1,29 @@
+extend layout
+
+block content
+    h1 #{title}: #{author.name}
+    p
+    if (author.date_of_birth)
+        |#{author.date_of_birth_formatted}
+    else
+        |?
+    | &nbsp;-&nbsp;
+    if (author.date_of_death)
+        |#{author.date_of_death_formatted}
+    else
+        |?
+    block delete-warning
+    div(style="margin-left:20px;margin-top:20px")
+        h4 Books
+        dl
+        each book in book_list
+            dt
+                a(href=book.url) #[strong #{book.title}]
+            dd #{book.summary}
+
+    block delete-button
+        hr
+        p
+            a(href=author.url+'/delete') Delete author
+        p
+            a(href=author.url+'/update') Update author

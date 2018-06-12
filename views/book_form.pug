@@ -1,0 +1,39 @@
+extend layout
+
+block content
+    h1= title
+    h2= book
+
+    form(method='POST', action='')
+        div.form-group
+            label(for='title') Title:
+            input#title.form-control(type='text', required, name='title', value=(undefined===book ? '' : book.title), placeholder='Enter the book title')
+        div.form-group
+            label(for='author') Author:
+            select#author.form-control(type='select', required, name='author', placeholder='Choose an Author')
+                for author in authors
+                    if book
+                        option(value=author._id, selected=(author._id.toString()==book.author)) #{author.name}
+                    else
+                        option(value=author._id) #{author.name}
+        div.form-group
+            label(for='summary') Summary:
+            textarea#summary.form-control(placeholder='Enter the summary', required, name='summary') #{(undefined===book ? '' : book.summary)}
+        div.form-group
+            label(for='isbn') ISBN:
+            input#isbn.form-control(type='text', placeholder='Enter ISBN here', required, name='isbn', value=(undefined===book ? '' : book.isbn))
+        div.form-group
+            label Genre:
+            div
+                for genre in genres
+                    div(style='display: inline; padding-right: 10px')
+                        input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked)
+                        label(for=genre.id) #{genre.name}
+        if update_flag
+            button.btn.btn-primary(type='submit') Update Book
+        else
+            button.btn.btn-primary(type='submit') Create Book
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

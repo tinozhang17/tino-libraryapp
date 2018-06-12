@@ -1,0 +1,37 @@
+extends layout
+
+block content
+
+    h1 Genre: #{genre.name}
+
+    if delete_flag
+        if (genre_books.length > 0)
+            h4.text-danger #[strong Please delete the following Books before deleting this Genre.]
+        else
+            h4.text-warning #[strong Are you sure you want to delete this Genre?]
+
+    div(style='margin-left:20px;margin-top:20')
+
+        h4 Books
+
+        dl
+        each book in genre_books
+            dt
+                a(href=book.url) #{book.title}
+            dd #{book.summary}
+
+        else
+            p This genre has no books
+
+    hr
+
+    if delete_flag
+        if (genre_books.length === 0)
+            form(method="POST", action="")
+                input(type='hidden', name='genre', value=genre._id)
+                button.btn.btn-primary(type='submit') Delete Genre
+    else
+        p
+            a(href=genre.url + '/delete') Delete Genre
+        p
+            a(href=genre.url + '/update') Update Genre

@@ -1,0 +1,14 @@
+extend author_detail
+
+block delete-warning
+    if (book_list.length > 0)
+        h4.text-danger #[strong Delete the following books before attempting to delete this Author.]
+    else
+        h4.text-danger #[strong Do you really want to delete this Author?]
+
+block delete-button
+    if (book_list.length === 0)
+        form(method='POST', action='')
+            div.form-group
+                input(type='hidden', name='authorid', value=author._id)
+            button.btn.btn-primary(type='submit') Delete Author
